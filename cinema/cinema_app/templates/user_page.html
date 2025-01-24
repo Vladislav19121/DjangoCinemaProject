@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои Билеты</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Ваши Билеты</h1>
+
+        {% if your_tickets %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Билета</th>
+                        <th>Фильм</th>
+                        <th>Цена Билета</th>
+                        <th>Количество</th>
+                        <th>Начало сеанса</th>
+                        <th>Конец сеанса</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in your_tickets %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td><a href="{% url 'film_detail' ticket.session.movies.id %}">{{ ticket.session.movies.name }}</a></td>  <!-- Здесь предполагается, что у вас есть строковое представление для session -->
+                            <td>{{ ticket.ticket_price }} ₽</td>
+                            <td>{{ ticket.ticket_sold }}</td>
+                            <td>{{ ticket.session.time_start }}</td>
+                            <td>{{ ticket.session.time_end }}</td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>У вас пока нет купленных билетов.</p>
+        {% endif %}
+        
+        <a href="{% url 'session_list' %}">Вернуться к сеансам</a>  <!-- Ссылка для возврата на страницу сеансов -->
+    </div>
+</body>
+</html>

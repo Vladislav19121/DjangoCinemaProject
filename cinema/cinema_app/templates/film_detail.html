@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ film_name }}</title>
+    <!-- Подключите свои стили, если нужно -->
+</head>
+<body>
+    <div class="film-detail">
+        <h1>Название фильма: {{ film_name }}</h1>
+        <h2><img src="{{ image }}" alt="{{ image }}" class="actor-image"></h2>
+        <p><strong>Режиссер:</strong> {{ director_film.name }}</p>
+
+        <h2>Актеры:</h2>
+        <ul>
+            {% for actor in all_actors %}
+                <li><a href="{% url 'actor_info' actor.id %}">{{ actor.name }}</a></li>
+            {% empty %}
+                <li>Нет доступных актеров.</li>
+            {% endfor %}
+        </ul>
+        <h2>Genres:</h2>
+        <ul>
+            {% for genre in genre_film %}
+                <li>{{ genre }}</li>
+            {% empty %}
+                <li>No genres available.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Description:</h2>
+        <p>{{ description_film }}</p>
+        <h2>Available Sessions:</h2>
+        <ul>
+            {% for session in available_sessions %}
+                <li>{{ session.time_start }} - {{ session.time_end }} - <a href="{% url 'purchase_ticket' session.id %}">{{ session.ticket_total }}</a></li>
+            {% empty %}
+                <li>No available sessions.</li>
+            {% endfor %}
+        </ul>
+
+            <!-- Форма для покупки билета будет отображаться здесь -->
+            {% if form %}
+            <form method="post">
+                {% csrf_token %}
+                <p><strong>Цена билета:</strong> {{ ticket_price }} руб.</p>
+                <p><strong>Доступно билетов:</strong> {{ session.ticket_total }}</p>
+                {{ form.as_p }}
+                <button type="submit">Купить билет</button>
+            </form>
+            {% endif %}
+         <!-- Display message of sold out after the form-->
+         {% if available_sessions %} <!-- Check if there are sessions before iterating -->
+                {% for session in available_sessions %}
+                    {% if session.ticket_total == 0 %}
+                        <p>Билеты распроданы.</p>
+                    {% endif %}
+                {% endfor %}
+         {% else %}
+            <p>Нет сеансов</p>
+         {% endif %}
+       {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+    </div>
+</body>
+</html>

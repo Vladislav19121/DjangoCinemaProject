@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование билета</title>
+    <!-- Подключите свои стили, если нужно -->
+</head>
+<body>
+    <div class="ticket-purchase">
+        <h1>Бронирование билета</h1>
+
+        <!-- Форма для покупки билета -->
+        {% if user.is_authenticated %}
+            {% if form %}
+            <form method="post">
+                {% csrf_token %}
+                <p><strong>Цена билета:</strong> {{ ticket_price }} руб.</p>
+                <p><strong>Доступно билетов:</strong> {{ available_tickets }}</p>
+                {{ form.user.label }}: {{ form.user }}
+                <button type="submit">Купить билет</button>
+            </form>            
+            {% endif %}
+        {% else %}
+            <h5> Чтобы забронировать билет, для начала надо зарегистрироваться </h5>
+        {% endif %}
+
+        <!-- Сообщение об ошибке, если есть -->
+        {% if error %}
+            <p style="color: red;"> {{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

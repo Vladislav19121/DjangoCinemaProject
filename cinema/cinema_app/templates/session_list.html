@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сеансы</title>
+</head>
+<body>
+    <header>
+        
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'your_page' user.id %}">Моя Страница</a></li>  <!-- Ссылка на страницу пользователя -->
+                    <li><a href="{% url 'logout' %}">Выход</a></li>
+                {% else %}
+                    <li><a href="{% url 'registration' %}">Регистрация</a></li>
+                    <li><a href="{% url 'login' %}">Вход</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Доступные сеансы</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Фильм</th>
+                    <th>Начало</th>
+                    <th>Конец</th>
+                    <th>Осталось билетов</th>
+                    <th>Продано билетов</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td><a href="{% url 'film_detail' session.movies.id %}">{{ session.movies.name }}</a></td> <!-- Ссылка на страницу деталей фильма -->
+                    <td>{{ session.time_start }}</td>
+                    <td>{{ session.time_end }}</td>
+                    <td>{{ session.ticket_total }}</td>
+                    <td>{{ session.ticket_sold }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Нет доступных сеансов.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Ваш Кинотеатр</p>
+    </footer>
+</body>
+</html>
