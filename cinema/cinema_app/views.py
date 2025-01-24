@@ -120,7 +120,7 @@ def actor_info(request, id):
     return render(request, 'actor_info.html', {'actor_name' : actor_name, 'actor_age' : actor_age, 'actor_sex' : actor_sex, 'actor_image' : actor_image})
 
 
-                            
+#new code                           
                                                 
                                
 
