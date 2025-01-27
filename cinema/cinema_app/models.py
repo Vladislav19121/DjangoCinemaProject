@@ -27,7 +27,7 @@ class Genre(models.Model):
 class Movie(models.Model):
     name = models.CharField(max_length=50)
     director = models.ForeignKey(Director, on_delete=models.CASCADE, related_name='director')
-    actors = models.ManyToManyField(Actor)
+    actors = models.ManyToManyField(Actor, related_name='movies')
     description = models.CharField(max_length=255, default='No description available')
     genres = models.ManyToManyField(Genre)
     release_data = models.DateField()

@@ -4,6 +4,8 @@ from .forms import TicketForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
+from collections import defaultdict
+
 
 @csrf_exempt
 def registration(request):
@@ -112,12 +114,12 @@ def page_user(request, user_id):
 
 def actor_info(request, id):
     actor = get_object_or_404(Actor, id=id)
-
     actor_name = actor.name
     actor_age = actor.age
     actor_sex = actor.sex
     actor_image = actor.image
-    return render(request, 'actor_info.html', {'actor_name' : actor_name, 'actor_age' : actor_age, 'actor_sex' : actor_sex, 'actor_image' : actor_image})
+    films = actor.movies.all()
+    return render(request, 'actor_info.html', {'actor_name' : actor_name, 'actor_age' : actor_age, 'actor_sex' : actor_sex, 'actor_image' : actor_image, 'films' : films})
 
 
 #new code and new code        

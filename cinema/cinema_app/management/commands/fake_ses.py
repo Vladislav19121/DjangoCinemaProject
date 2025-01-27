@@ -5,7 +5,7 @@ import random
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.core.files.base import ContentFile
-import requests
+
 from io import BytesIO
 
 from cinema_app.models import Session, Movie, Genre, Actor, Director, Ticket
@@ -30,14 +30,13 @@ movies_fl = {
 }
 
 actors_fl = {
-    "Роберт Дауни-младший": {"name": "Роберт Дауни-младший", "sex": "мужской", "age": 58, 'image': "robert_downey_jr.jpg"},
-    "Мерил Стрип": {"name": "Мерил Стрип", "sex": "женский", "age": 74, 'image': "meryl_streep.jpg"},
-    "Леонардо ДиКаприо": {"name": "Леонардо ДиКаприо", "sex": "мужской", "age": 48, 'image': "leonardo_dicaprio.jpg"},
-    "Джулия Робертс": {"name": "Джулия Робертс", "sex": "женский", "age": 56, 'image': "julia_roberts.jpg"},
-    "Том Хэнкс": {"name": "Том Хэнкс", "sex": "мужской", "age": 67, 'image': "tom_hanks.jpg"},
-    "Натали Портман": {"name": "Натали Портман", "sex": "женский", "age": 42, 'image': "natalie_portman.jpg"},
-    "Бенедикт Камбербэтч": {"name": "Бенедикт Камбербэтч", "sex": "мужской", "age": 47, 'image': "benedict_cumberbatch.jpg"},
-    "Сандра Буллок": {"name": "Сандра Буллок", "sex": "женский", "age": 59, 'image': "sandra_bullock.jpg"},
+    "Роберт Дауни-младший": {"name": "Роберт Дауни-младший", "sex": "мужской", "age": 58, 'image': "robert_downey_jr.jpg",},
+    "Мерил Стрип": {"name": "Мерил Стрип", "sex": "женский", "age": 74, 'image': "meryl_streep.jpg", },
+    "Джулия Робертс": {"name": "Джулия Робертс", "sex": "женский", "age": 56, 'image': "julia_roberts.jpg", },
+    "Том Хэнкс": {"name": "Том Хэнкс", "sex": "мужской", "age": 67, 'image': "tom_hanks.jpg", },
+    "Натали Портман": {"name": "Натали Портман", "sex": "женский", "age": 42, 'image': "natalie_portman.jpg", },
+    "Бенедикт Камбербэтч": {"name": "Бенедикт Камбербэтч", "sex": "мужской", "age": 47, 'image': "benedict_cumberbatch.jpg", },
+    "Сандра Буллок": {"name": "Сандра Буллок", "sex": "женский", "age": 59, 'image': "sandra_bullock.jpg", },
 }
 
 
@@ -79,20 +78,22 @@ class Command(BaseCommand):
             Genre.objects.create(genre_name = random.choice(genres_for_film),
                                  pg_rating = random.randint(1, 18))
             
-        for _ in range(50):
-            actor_name = random.choice(list(actors_fl.keys()))
+        actor_names = list(actors_fl.keys())
+        selected_actors = random.sample(actor_names, k=7)
+        for actor_name in selected_actors:
             actor_info = actors_fl[actor_name]
-
-            actor = Actor.objects.create(name = actor_info['name'],
-                                 age = actor_info['age'],
-                                 sex = actor_info['sex'],
-                                 oscar_count = random.randint(1, 3),
-                                 image=f'/media/images/{actor_info['image']}',
-            )
+    
+            actor = Actor.objects.create(
+            name=actor_info['name'],
+            age=actor_info['age'],
+            sex=actor_info['sex'],
+            oscar_count=random.randint(1, 3),
+            image=f'/media/images/{actor_info["image"]}'  # Исправлено: используйте двойные кавычки для ключа 'image'
+        )   
             
             # actor.image.save(f'{actor.name}.jpg', get_random_image())
             
-            actors = list(Actor.objects.all())
+            actor = list(Actor.objects.all())
         
         for _ in range(10):
             director_name = random.choice(list(directors_fl.keys()))
@@ -128,10 +129,12 @@ class Command(BaseCommand):
                                             )
             
             
-            selected_actors = random.sample(list(Actor.objects.all()), k=random.randint(1, 5))  # Выбираем от 1 до 5 актеров
+            selected_actors = random.sample(list(Actor.objects.all()), k=random.randint(1, 4))
             movie.actors.set(selected_actors)  
             selected_genres = random.sample(list(Genre.objects.all()), k = random.randint(1, 3))
             movie.genres.set(selected_genres)
+            if len(selected_actors) != len(set(selected_actors)):
+                print("Ошибка: найдены дубликаты актеров!")
             
         movies = list(Movie.objects.all())
 

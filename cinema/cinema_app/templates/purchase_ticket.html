@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Бронирование билета</title>
-    <!-- Подключите свои стили, если нужно -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/purchase_ticket.css' %}">
 </head>
 <body>
     <div class="ticket-purchase">
@@ -17,7 +18,7 @@
                 {% csrf_token %}
                 <p><strong>Цена билета:</strong> {{ ticket_price }} руб.</p>
                 <p><strong>Доступно билетов:</strong> {{ available_tickets }}</p>
-                {{ form.user.label }}: {{ form.user }}
+                {{ form.user.label }} {{ form.user }}
                 <button type="submit">Купить билет</button>
             </form>            
             {% endif %}

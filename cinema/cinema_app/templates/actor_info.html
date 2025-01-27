@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Информация об актере</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/actor_info.css' %}">
 </head>
 <body>
     <div class="container">
@@ -14,6 +16,14 @@
             <img src="{{ actor_image }}" alt="{{ actor_name }}" class="actor-image">
             <p><strong>Возраст:</strong> {{ actor_age }}</p>
             <p><strong>Пол:</strong> {{ actor_sex }}</p>
+            <h2>Снимался в фильмах:</h2>
+                <ul>
+                {% for film in films %}
+                    <li>{{ film.name }}</li>
+                {% empty %}
+                    <li>Нет фильмов для отображения.</li>
+                {% endfor %}
+   </ul>
         </div>
 
         <a href="{% url 'session_list' %}">Назад к списку сеансов</a> 

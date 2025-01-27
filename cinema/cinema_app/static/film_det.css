@@ -1,0 +1,99 @@
+/* film_detail.css */
+
+/* Общие стили для body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Стили для контейнера с деталями фильма */
+.film-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для заголовка фильма */
+h1 {
+    color: #333;
+    font-size: 2.5em;
+}
+
+/* Стили для изображений актеров */
+.actor-image {
+    max-width: 150px;
+    border-radius: 8px;
+}
+
+/* Стили для подзаголовков */
+h2 {
+    color: #444;
+    font-size: 1.8em;
+    margin-top: 20px;
+}
+
+/* Стили для списков */
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    background-color: #e9ecef;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Стили для ссылок актеров */
+ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Стили для описания фильма */
+p {
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Стили для формы покупки билета */
+form {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+form p {
+    margin: 10px 0;
+}
+
+/* Стили для кнопки покупки билета */
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Стили для сообщений об ошибках */
+.error-message {
+    color: red;
+    margin-top: 10px;
+}

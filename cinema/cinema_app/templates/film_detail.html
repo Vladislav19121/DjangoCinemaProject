@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ film_name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/film_det.css' %}">
     <!-- Подключите свои стили, если нужно -->
 </head>
 <body>
@@ -20,7 +22,7 @@
                 <li>Нет доступных актеров.</li>
             {% endfor %}
         </ul>
-        <h2>Genres:</h2>
+        <h2>Жанры:</h2>
         <ul>
             {% for genre in genre_film %}
                 <li>{{ genre }}</li>
@@ -29,12 +31,12 @@
             {% endfor %}
         </ul>
 
-        <h2>Description:</h2>
+        <h2>Описание:</h2>
         <p>{{ description_film }}</p>
-        <h2>Available Sessions:</h2>
+        <h2>Доступные сеансы:</h2>
         <ul>
             {% for session in available_sessions %}
-                <li>{{ session.time_start }} - {{ session.time_end }} - <a href="{% url 'purchase_ticket' session.id %}">{{ session.ticket_total }}</a></li>
+                <li>{{ session.time_start }} - {{ session.time_end }} - <a href="{% url 'purchase_ticket' session.id %}">{{ session.ticket_total }} билетов в наличии</a></li>
             {% empty %}
                 <li>No available sessions.</li>
             {% endfor %}
